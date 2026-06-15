@@ -7,3 +7,6 @@ services/persistence/data/
 
 # El snapshot de tasas SÍ se versiona (fuente de verdad del simulador):
 !services/simulator/data/rates.snapshot.json
+
+# Credenciales reales de Dynatrace para Fluent Bit (token) — NO versionar
+fluent-bit/dynatrace.env
