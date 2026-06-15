@@ -1,0 +1,21 @@
+{
+  "base": "USD",
+  "fetchedAt": "2026-06-15T00:28:20.388Z",
+  "source": "fallback",
+  "supported": [
+    "USD",
+    "JPY",
+    "MXN",
+    "PEN",
+    "COP",
+    "EUR"
+  ],
+  "rates": {
+    "USD": 1,
+    "EUR": 0.92,
+    "JPY": 156.3,
+    "MXN": 18.7,
+    "PEN": 3.75,
+    "COP": 4050
+  }
+}

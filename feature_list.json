@@ -1,0 +1,21 @@
+{
+  "harness": "Harness-SDD",
+  "version": "1.0.0",
+  "project": "DynaDemoCap - Exchange Simulator",
+  "features": [
+    {
+      "id": "f1_exchange_simulator",
+      "name": "Exchange Simulator con caché inteligente",
+      "description": "Mockup Vue (Frontend) + Servicio Simulador/Caché (Node.js) que consume exchangerate UNA sola vez (seed) y persiste el resultado como snapshot JSON en el código para las monedas USD, JPY, MXN, PEN, COP, EUR + Servicio de Persistencia (Node.js) + sistema global de logs estructurados. Levantado mediante scripts .sh y .ps1 con validaciones previas.",
+      "currencies": ["USD", "JPY", "MXN", "PEN", "COP", "EUR"],
+      "snapshot": "services/simulator/data/rates.snapshot.json",
+      "status": "done",
+      "gate": "spec_ready",
+      "artifacts": {
+        "requirements": "specs/requirements.md",
+        "design": "specs/design.md",
+        "tasks": "specs/tasks.md"
+      }
+    }
+  ]
+}

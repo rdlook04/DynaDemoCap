@@ -1,0 +1,9 @@
+node_modules/
+.env
+*.log
+
+# Datos generados en runtime por el servicio de persistencia
+services/persistence/data/
+
+# El snapshot de tasas SÍ se versiona (fuente de verdad del simulador):
+!services/simulator/data/rates.snapshot.json

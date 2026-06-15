@@ -1,0 +1,14 @@
+{
+  "name": "dynademocap-simulator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Servicio Simulador / Caché de tipos de cambio (consume exchangerate una sola vez y persiste snapshot JSON).",
+  "main": "server.js",
+  "scripts": {
+    "seed:rates": "node seed.js",
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
