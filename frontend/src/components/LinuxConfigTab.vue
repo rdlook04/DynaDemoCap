@@ -22,7 +22,7 @@ cp dynatrace.env.example dynatrace.env
   },
   {
     id: 'run',
-    title: '2 · Levantar Fluent Bit (podman rootless · sin sudo)',
+    title: '2 · Métricas — RAM + carga CPU (podman rootless · sin sudo)',
     note: 'Monta /proc y /sys del host para métricas reales e inyecta las credenciales por --env-file.',
     code: `podman run -d --name dynademocap-fluentbit \\
   --restart=always \\
@@ -36,8 +36,21 @@ cp dynatrace.env.example dynatrace.env
   docker.io/fluent/fluent-bit:latest`,
   },
   {
+    id: 'run-logs',
+    title: '3 · Logs de auditoría (docker · necesita root para leer /var/log/audit)',
+    note: 'El audit log es solo root; este contenedor usa docker (daemon root) y monta /var/log/audit.',
+    code: `docker run -d --name dynademocap-fluentbit-logs \\
+  --restart=always \\
+  --security-opt label=disable \\
+  --env-file ~/DynaDemoCap/fluent-bit/dynatrace.env \\
+  -v ~/DynaDemoCap/fluent-bit/fluent-bit.logs.conf:/fluent-bit/etc/fluent-bit.conf:ro \\
+  -v ~/DynaDemoCap/fluent-bit/parsers.conf:/fluent-bit/etc/parsers.conf:ro \\
+  -v /var/log/audit:/host/audit:ro \\
+  docker.io/fluent/fluent-bit:latest`,
+  },
+  {
     id: 'verify',
-    title: '3 · Verificar',
+    title: '4 · Verificar',
     note: 'Logs del agente y contadores locales; debe verse HTTP status=200 hacia Dynatrace.',
     code: `podman logs --tail 20 dynademocap-fluentbit
 curl -s http://127.0.0.1:2020/api/v1/metrics`,

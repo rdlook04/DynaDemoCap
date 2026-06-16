@@ -20,6 +20,32 @@ const conf = `[INPUT]
     host              \${DYNATRACE_HOST}
     metrics_uri       /api/v2/otlp/v1/metrics
     header            Authorization Api-Token \${DYNATRACE_API_TOKEN}`;
+
+const deployAll = `# En el servidor: un solo comando levanta TODO (incluye Fluent Bit)
+bash ~/DynaDemoCap/scripts/deploy-server.sh`;
+
+const deployFB = `# 1) Token de Dynatrace (una sola vez)
+cd ~/DynaDemoCap/fluent-bit
+cp dynatrace.env.demo dynatrace.env       # pega tu token dt0c01... dentro
+
+# 2) Metricas (RAM + carga de CPU) -> contenedor podman
+podman run -d --name dynademocap-fluentbit --restart=always --security-opt label=disable \\
+  --env-file ~/DynaDemoCap/fluent-bit/dynatrace.env \\
+  -v ~/DynaDemoCap/fluent-bit/fluent-bit.podman.conf:/fluent-bit/etc/fluent-bit.conf:ro \\
+  -v ~/DynaDemoCap/fluent-bit/parsers.conf:/fluent-bit/etc/parsers.conf:ro \\
+  -v /proc:/host/proc:ro -v /sys:/host/sys:ro \\
+  docker.io/fluent/fluent-bit:latest
+
+# 3) Log de auditoria -> contenedor docker (lee /var/log/audit)
+docker run -d --name dynademocap-fluentbit-logs --restart=always --security-opt label=disable \\
+  --env-file ~/DynaDemoCap/fluent-bit/dynatrace.env \\
+  -v ~/DynaDemoCap/fluent-bit/fluent-bit.logs.conf:/fluent-bit/etc/fluent-bit.conf:ro \\
+  -v ~/DynaDemoCap/fluent-bit/parsers.conf:/fluent-bit/etc/parsers.conf:ro \\
+  -v /var/log/audit:/host/audit:ro \\
+  docker.io/fluent/fluent-bit:latest
+
+# 4) Verificar que ambos corren
+podman ps ; docker ps`;
 </script>
 
 <template>
@@ -67,6 +93,35 @@ const conf = `[INPUT]
         <span class="pill ok">✓ Enviando a Dynatrace</span>
         <span class="pill">dvq06456.live.dynatrace.com</span>
       </div>
+    </section>
+
+    <!-- Cómo desplegarlo -->
+    <section class="card" style="margin-top:20px;">
+      <h2>Cómo desplegarlo (pasos)</h2>
+      <div class="callout">
+        <span class="emoji">⚡</span>
+        <p><strong>Forma fácil:</strong> en el servidor, un solo comando levanta todo — incluido Fluent Bit.</p>
+      </div>
+      <div class="codeblock">
+        <button class="copy-btn" @click="copy(deployAll, 'da')">{{ copied === 'da' ? '¡Copiado!' : 'Copiar' }}</button>
+        <pre>{{ deployAll }}</pre>
+      </div>
+
+      <p class="section-title">O paso a paso (solo Fluent Bit)</p>
+      <ol class="steps">
+        <li>Pon el <strong>token de Dynatrace</strong> en <code>dynatrace.env</code>.</li>
+        <li>Levanta el contenedor de <strong>métricas</strong> (RAM + carga de CPU).</li>
+        <li>Levanta el contenedor de <strong>logs</strong> (registro de auditoría).</li>
+        <li>Verifica que <strong>ambos</strong> estén corriendo.</li>
+      </ol>
+      <div class="codeblock">
+        <button class="copy-btn" @click="copy(deployFB, 'dfb')">{{ copied === 'dfb' ? '¡Copiado!' : 'Copiar' }}</button>
+        <pre>{{ deployFB }}</pre>
+      </div>
+      <p class="muted-text" style="margin-top:8px;">
+        Son <strong>dos contenedores</strong>: métricas en <em>podman</em> (sin permisos especiales) y
+        logs en <em>docker</em> (para poder leer el registro de auditoría del sistema).
+      </p>
     </section>
 
     <!-- Pasos demo -->
