@@ -52,12 +52,23 @@ curl -fsSL https://raw.githubusercontent.com/fluent/fluent-bit/master/install.sh
 
 ## 2. Configurar credenciales de Dynatrace
 
+Dos plantillas:
+- `dynatrace.env.demo` → host del laboratorio **pre-rellenado**; solo pegas el token.
+- `dynatrace.env.example` → plantilla genérica con `CHANGEME` para tu **propio** entorno.
+
 ```bash
+# Demo (host ya puesto, solo pega el token):
+cp dynatrace.env.demo dynatrace.env
+#   DYNATRACE_API_TOKEN=dt0c01....   (scopes: metrics.ingest + logs.ingest)
+
+# O para tu entorno propio:
 cp dynatrace.env.example dynatrace.env
-# edita dynatrace.env:
 #   DYNATRACE_HOST=<env-id>.live.dynatrace.com   (sin https://)
-#   DYNATRACE_API_TOKEN=dt0c01....               (scope: metrics.ingest)
+#   DYNATRACE_API_TOKEN=dt0c01....
 ```
+
+> El token **nunca** se versiona: vive solo en `dynatrace.env` (ignorado por git).
+> `deploy.sh` omite Fluent Bit si el token sigue en `CHANGEME`.
 
 ## 3. Ejecutar
 

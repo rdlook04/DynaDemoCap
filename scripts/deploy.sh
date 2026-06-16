@@ -42,7 +42,12 @@ main() {
   setsid bash -c "cd '$ROOT/frontend' && set -a; . '$ROOT/.env'; set +a; npm run dev > '$ROOT/fe.log' 2>&1" </dev/null &
 
   echo "[deploy] 6/6 · (Re)levantando Fluent Bit…"
-  if [ -f fluent-bit/dynatrace.env ]; then
+  # Si no hay credenciales, parte de la plantilla .demo (host pre-rellenado)
+  if [ ! -f fluent-bit/dynatrace.env ] && [ -f fluent-bit/dynatrace.env.demo ]; then
+    cp fluent-bit/dynatrace.env.demo fluent-bit/dynatrace.env
+    echo "[deploy]   creado dynatrace.env desde la plantilla .demo"
+  fi
+  if [ -f fluent-bit/dynatrace.env ] && ! grep -q "CHANGEME" fluent-bit/dynatrace.env; then
     # Métricas (podman rootless)
     podman rm -f dynademocap-fluentbit >/dev/null 2>&1 || true
     podman run -d --name dynademocap-fluentbit --restart=always --security-opt label=disable \
@@ -61,7 +66,7 @@ main() {
       -v /var/log/audit:/host/audit:ro \
       docker.io/fluent/fluent-bit:latest >/dev/null && echo "[deploy]   logs: OK" || echo "[deploy]   logs: omitido"
   else
-    echo "[deploy]   Fluent Bit omitido (falta fluent-bit/dynatrace.env)"
+    echo "[deploy]   Fluent Bit omitido: pega tu token en fluent-bit/dynatrace.env (aún tiene CHANGEME)"
   fi
 
   local IP; IP="$(hostname -I 2>/dev/null | awk '{print $1}')"
