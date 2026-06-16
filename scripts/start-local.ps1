@@ -1,6 +1,6 @@
 # ============================================================================
 # DynaDemoCap · Arranque del entorno (Windows)  — R-ENV-01..07
-# Paridad con start.sh: valida variables, dependencias y puertos antes de
+# Paridad con start-local.sh: valida variables, dependencias y puertos antes de
 # levantar SIM, PER y FE.
 # ============================================================================
 #Requires -Version 5
@@ -9,8 +9,8 @@ $ErrorActionPreference = 'Stop'
 $Root = Split-Path -Parent $PSScriptRoot
 Set-Location $Root
 
-function Log($msg)  { Write-Host "[start.ps1] $msg" }
-function Fail($msg) { Write-Host "[start.ps1][ERROR] $msg" -ForegroundColor Red; exit 1 }
+function Log($msg)  { Write-Host "[start-local] $msg" }
+function Fail($msg) { Write-Host "[start-local][ERROR] $msg" -ForegroundColor Red; exit 1 }
 
 # --- Cargar .env -----------------------------------------------------------
 $envFile = Join-Path $Root '.env'

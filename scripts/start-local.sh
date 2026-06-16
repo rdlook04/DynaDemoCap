@@ -8,8 +8,8 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
-log()  { echo "[start.sh] $1"; }
-fail() { echo "[start.sh][ERROR] $1" >&2; exit 1; }
+log()  { echo "[start-local] $1"; }
+fail() { echo "[start-local][ERROR] $1" >&2; exit 1; }
 
 # --- Cargar .env -----------------------------------------------------------
 if [ -f .env ]; then

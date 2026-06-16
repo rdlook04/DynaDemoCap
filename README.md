@@ -28,20 +28,31 @@ sea ejecutable de inmediato (`source: "fallback"`).
 - Node.js ≥ 18 (incluye `fetch` nativo)
 - npm
 
-## Cómo ejecutar
+## ¿Qué ejecuto y dónde?
+
+No son pasos en secuencia: eliges **uno según el contexto**.
+
+| Quiero… | Ejecuta | Dónde |
+|---------|---------|-------|
+| Desarrollar/probar **en mi máquina** | `scripts/start-local.sh` (Linux/macOS) · `scripts/start-local.ps1` (Windows) | tu **PC** |
+| Desplegar/actualizar **en el servidor** | `scripts/deploy-server.sh` | la **VM** (hace `git pull` + levanta todo) |
+
+> En la VM **no** se usa `start-local`: `deploy-server.sh` ya arranca SIM/PER/FE y Fluent Bit.
+
+## Cómo ejecutar (dev local)
 
 1. Copia la configuración: `cp .env.example .env` (ya incluido con placeholders válidos).
 2. Levanta todo con el script de tu plataforma:
 
 ```bash
 # Linux / macOS
-chmod +x scripts/start.sh
-./scripts/start.sh
+chmod +x scripts/start-local.sh
+./scripts/start-local.sh
 ```
 
 ```powershell
 # Windows
-.\scripts\start.ps1
+.\scripts\start-local.ps1
 ```
 
 3. Abre **http://localhost:5173**.
@@ -49,6 +60,16 @@ chmod +x scripts/start.sh
 Los scripts validan, **antes** de levantar nada: variables de entorno obligatorias,
 dependencias (Node/npm, `node_modules` del frontend) y puertos libres. Luego ejecutan el
 seed y arrancan SIM → PER → FE en orden.
+
+## Despliegue en el servidor (GitOps)
+
+```bash
+# En tu PC, tras editar:
+git add -A && git commit -m "..." && git push
+
+# En la VM (un solo comando: trae el repo y levanta todo):
+bash ~/DynaDemoCap/scripts/deploy-server.sh
+```
 
 ### Tasas en vivo (opcional)
 
@@ -69,7 +90,7 @@ snapshot con datos en vivo.
 
 ```
 DynaDemoCap/
-├── scripts/         start.sh · start.ps1 (validación + arranque)
+├── scripts/         start-local.sh/.ps1 (dev) · deploy-server.sh (VM)
 ├── shared/logger/   logger estructurado compartido
 ├── services/
 │   ├── simulator/   seed.js · server.js · data/rates.snapshot.json

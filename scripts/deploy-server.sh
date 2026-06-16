@@ -6,7 +6,7 @@
 #   - Backends SIM + PER  y frontend Vue (Vite, expuesto en 0.0.0.0)
 #   - Fluent Bit: métricas (podman) y logs de auditoría (docker), si hay creds
 #
-# Uso en la VM:   bash ~/DynaDemoCap/scripts/deploy.sh
+# Uso en la VM:   bash ~/DynaDemoCap/scripts/deploy-server.sh
 # Idempotente: detiene instancias previas y vuelve a levantar.
 #
 # El cuerpo va dentro de main() y se invoca en la última línea: así bash lee

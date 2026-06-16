@@ -68,7 +68,7 @@ cp dynatrace.env.example dynatrace.env
 ```
 
 > El token **nunca** se versiona: vive solo en `dynatrace.env` (ignorado por git).
-> `deploy.sh` omite Fluent Bit si el token sigue en `CHANGEME`.
+> `deploy-server.sh` omite Fluent Bit si el token sigue en `CHANGEME`.
 
 ## 3. Ejecutar
 
