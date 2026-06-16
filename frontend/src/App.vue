@@ -2,11 +2,13 @@
 import { ref } from 'vue';
 import ExchangeTab from './components/ExchangeTab.vue';
 import FluentBitTab from './components/FluentBitTab.vue';
+import BusinessObsTab from './components/BusinessObsTab.vue';
 import LinuxConfigTab from './components/LinuxConfigTab.vue';
 
 const tabs = [
   { id: 'exchange', label: 'Exchange Simulado', icon: '💱', comp: ExchangeTab },
   { id: 'fluentbit', label: 'Fluent Bit', icon: '📡', comp: FluentBitTab },
+  { id: 'bizobs', label: 'Business Observability', icon: '🎯', comp: BusinessObsTab },
   { id: 'linux', label: 'Configuración Linux', icon: '🐧', comp: LinuxConfigTab },
 ];
 const active = ref('exchange');
@@ -39,6 +41,6 @@ function currentComp() {
 
     <component :is="currentComp()" />
 
-    <p class="foot">DynaDemoCap · Harness-SDD · f1_exchange_simulator + observabilidad Fluent Bit→Dynatrace</p>
+    <p class="foot">DynaDemoCap · demo de observabilidad con Dynatrace · OneAgent + Fluent Bit + Business Observability</p>
   </div>
 </template>

@@ -237,3 +237,67 @@ code {
   color: var(--muted);
 }
 .pill.ok { color: #9fe1cb; border-color: #1d9e75; }
+
+/* --- Explainer / presentación --- */
+.lead { font-size: 15px; line-height: 1.8; color: var(--text); margin: 0 0 4px; }
+.muted-text { color: var(--muted); line-height: 1.7; }
+
+.callout {
+  display: flex; gap: 12px; align-items: flex-start;
+  background: #14233f;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent-2);
+  border-radius: 0 10px 10px 0;
+  padding: 14px 16px;
+  margin: 14px 0 4px;
+}
+.callout .emoji { font-size: 22px; line-height: 1.2; }
+.callout p { margin: 0; line-height: 1.7; }
+.callout strong { color: var(--accent-2); }
+
+.steps { list-style: none; counter-reset: s; padding: 0; margin: 12px 0 0; }
+.steps li {
+  counter-increment: s;
+  position: relative;
+  padding: 11px 0 11px 44px;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.6;
+}
+.steps li:last-child { border-bottom: none; }
+.steps li::before {
+  content: counter(s);
+  position: absolute; left: 0; top: 9px;
+  width: 28px; height: 28px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #04122a; font-weight: 700;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 14px;
+}
+
+.pieces { display: grid; gap: 10px; margin-top: 10px; }
+.piece {
+  display: flex; gap: 12px; align-items: flex-start;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.piece .pemoji { font-size: 22px; line-height: 1.3; }
+.piece b { display: block; margin-bottom: 2px; }
+.piece span { color: var(--muted); font-size: 13px; line-height: 1.55; }
+
+.flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 10px 0; }
+.flow .node {
+  background: var(--panel-2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 14px; font-size: 13px; text-align: center; line-height: 1.4;
+}
+.flow .arrow { color: var(--accent-2); font-size: 18px; }
+
+.linkbtn {
+  display: inline-block; margin-top: 10px;
+  padding: 9px 16px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #04122a; font-weight: 700; font-size: 14px; text-decoration: none;
+}
+.linkbtn:hover { opacity: 0.9; }
