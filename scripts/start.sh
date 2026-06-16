@@ -50,8 +50,8 @@ log "Generando snapshot de tasas (seed, una sola vez)..."
 node services/simulator/seed.js || fail "El seed de tasas falló"
 
 # --- 5. Levantar servicios en orden SIM -> PER -> FE (R-ENV-06) -------------
-export VITE_SIM_URL="http://localhost:${SIM_PORT}"
-export VITE_PER_URL="http://localhost:${PERSIST_PORT}"
+# Vite escucha en 0.0.0.0 (host:true en vite.config) y el frontend resuelve los
+# backends por el host de la URL, así que NO hace falta exportar IPs aquí.
 
 log "Iniciando SIM (simulador/caché) en :${SIM_PORT}..."
 node services/simulator/server.js & SIM_PID=$!

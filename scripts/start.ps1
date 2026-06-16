@@ -63,8 +63,8 @@ node services/simulator/seed.js
 if ($LASTEXITCODE -ne 0) { Fail "El seed de tasas falló" }
 
 # --- 5. Levantar servicios en orden SIM -> PER -> FE (R-ENV-06) -------------
-$env:VITE_SIM_URL = "http://localhost:$($env:SIM_PORT)"
-$env:VITE_PER_URL = "http://localhost:$($env:PERSIST_PORT)"
+# Vite escucha en 0.0.0.0 (host:true en vite.config) y el frontend resuelve los
+# backends por el host de la URL; NO hace falta exportar IPs aquí.
 
 Log "Iniciando SIM (simulador/caché) en :$($env:SIM_PORT)..."
 $sim = Start-Process node -ArgumentList 'services/simulator/server.js' -NoNewWindow -PassThru
